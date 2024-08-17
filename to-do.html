@@ -1,0 +1,79 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do List</title>
+    <style>
+        html {
+            background-color: azure;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: 18px;
+        }
+
+        button {
+            background-color: rgb(233, 233, 207);
+            font-size: 17px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            border-radius: 12px;
+            border: 0.5px solid brown;
+            box-shadow: 2px 1.5px 1px gray;
+            height: 37px;
+            width: 94px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:active {
+            box-shadow: 0.2px 0.2px 0.2px gray;
+            transform: translate(1.5px, 1.5px);
+            background-color: rgb(216, 216, 193);
+        }
+
+        input {
+            height: 35px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: 20px;
+            border-radius: 5px;
+            margin-left: 15px;
+            text-indent: 8px;
+            vertical-align: bottom;
+        }
+
+        input::placeholder {
+            font-size: 15px;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text" class="input" placeholder="Please add a new task...">
+    <button onclick="generate()">Add to list</button>
+    <ul class="unordered-list"></ul>
+
+    <script>
+        function generate() {
+            var inputBox = document.querySelector(".input");
+            var trimmedUserText = inputBox.value.trim();
+            if (trimmedUserText.length >= 3) {
+                var li = document.createElement("LI");
+                var ul = document.querySelector(".unordered-list");
+                ul.appendChild(li);
+                li.innerHTML = inputBox.value;
+                inputBox.value = "";
+                inputBox.focus();
+            } else {
+                alert("minimum of 3 characters are needed");
+                inputBox.value = "";
+                inputBox.focus();
+            }
+
+        }
+        
+
+
+    </script>
+</body>
+
+</html>
