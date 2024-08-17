@@ -50,7 +50,7 @@
 <body>
     <input type="text" class="input" placeholder="Please add a new task...">
     <button onclick="generate()">Add to list</button>
-    <ul class="unordered-list"></ul>
+    <ol class="ordered-list"></ol>
 
     <script>
         function generate() {
@@ -58,8 +58,8 @@
             var trimmedUserText = inputBox.value.trim();
             if (trimmedUserText.length >= 3) {
                 var li = document.createElement("LI");
-                var ul = document.querySelector(".unordered-list");
-                ul.appendChild(li);
+                var ol = document.querySelector(".ordered-list");
+                ol.appendChild(li);
                 li.innerHTML = inputBox.value;
                 inputBox.value = "";
                 inputBox.focus();
@@ -68,11 +68,8 @@
                 inputBox.value = "";
                 inputBox.focus();
             }
-
         }
-        
-
-
+        document.querySelector(".input").focus();
     </script>
 </body>
 
