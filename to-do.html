@@ -2,13 +2,14 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To do List</title>
+    <title>new to-do list</title>
     <style>
+        /* add css here. Just wanted to inform you. you're welcome..*/
         html {
-            background-color: azure;
+            background-color: rgb(155, 237, 237);
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             font-size: 18px;
+            overflow: hidden;
         }
 
         button {
@@ -18,10 +19,10 @@
             border-radius: 12px;
             border: 0.5px solid brown;
             box-shadow: 2px 1.5px 1px gray;
-            height: 37px;
-            width: 94px;
+            height: 42px;
+            /* width: 110px; */
             cursor: pointer;
-            margin-top: 10px;
+            /* margin-top: 10px; */
         }
 
         button:active {
@@ -31,7 +32,7 @@
         }
 
         input {
-            height: 35px;
+            height: 42px;
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             font-size: 20px;
             border-radius: 5px;
@@ -44,32 +45,123 @@
             font-size: 15px;
             font-style: italic;
         }
+
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: flex-start;
+            margin-top: 100px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .order-list {
+            display: block;
+            position: absolute;
+            left: 48%;
+            top: 15%;
+            width: auto;
+            height: auto;
+
+        }
+
+        .container .delete {
+            font-weight: 900;
+            margin-left: 20px;
+            color: rgb(223, 71, 71);
+            cursor: pointer;
+            font-family: 'Franklin Gothic Medium';
+            border: 0.5px dotted brown;
+            border-radius: 2px;
+            padding: 2px;
+            float: right;
+        }
+
+        .container .list-item {
+            width: 215px;
+            margin-bottom: 10px;
+
+        }
+
+        .container ol .done {
+            color: red;
+            font-style: italic;
+            text-decoration: line-through;
+        }
+
+        .container ol .undone {
+            color: #000;
+            font-style: normal;
+            text-decoration: none;
+        }
     </style>
 </head>
 
 <body>
-    <input type="text" class="input" placeholder="Please add a new task...">
-    <button onclick="generate()">Add to list</button>
-    <ol class="ordered-list"></ol>
+
+    <div class="container">
+        <input type="text" class="input-element">
+        <button onclick="generate()">Click me to add items!</button>
+    </div>
+
+
 
     <script>
+
+        
         function generate() {
-            var inputBox = document.querySelector(".input");
-            var trimmedUserText = inputBox.value.trim();
-            if (trimmedUserText.length >= 3) {
-                var li = document.createElement("LI");
-                var ol = document.querySelector(".ordered-list");
-                ol.appendChild(li);
-                li.innerHTML = inputBox.value;
-                inputBox.value = "";
-                inputBox.focus();
-            } else {
-                alert("minimum of 3 characters are needed");
-                inputBox.value = "";
-                inputBox.focus();
+            var inputTag = document.querySelector(".input-element");
+            var deleteTask = document.createElement("SPAN");
+            var li = document.createElement("LI");
+            li.classList.add("list-item")
+            var trimmedInput = inputTag.value.trim();
+
+            if (trimmedInput.length == 0) {
+                alert("Please fill out the form");
+                reset(inputTag);
+                return;
             }
+            if (trimmedInput.length < 3) {
+                alert("Add 3 characters at least");
+                reset(inputTag);
+                return;
+            }
+            li.innerHTML = inputTag.value;
+            li.appendChild(deleteTask);
+            document.querySelector(".order-list").appendChild(li);
+            deleteItem(deleteTask);
+            reset(inputTag);
         }
-        document.querySelector(".input").focus();
+
+        function reset(inputVariable) {
+            inputVariable.value = "";
+            inputVariable.focus();
+        }
+        function olMaker() {
+            var ol = document.createElement("OL");
+            ol.classList.add("order-list");
+            document.body.querySelector(".container").appendChild(ol);
+        }
+        function deleteItem(giveMeSpan) {
+                giveMeSpan.classList.add("delete")
+                giveMeSpan.innerHTML = ('X')
+                giveMeSpan.addEventListener("click", function (event) {
+                    event.target.parentNode.remove();
+                }
+                )
+            }
+
+        olMaker();
+        var inputTag = document.querySelector(".input-element");
+        inputTag.addEventListener ("keydown" , function (event) {
+                if(event.key == "Enter") {
+                    generate()
+                }
+            }
+        )
+
     </script>
 </body>
 
