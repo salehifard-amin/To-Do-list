@@ -20,9 +20,8 @@
             border: 0.5px solid brown;
             box-shadow: 2px 1.5px 1px gray;
             height: 42px;
-            /* width: 110px; */
             cursor: pointer;
-            /* margin-top: 10px; */
+
         }
 
         button:active {
@@ -32,13 +31,15 @@
         }
 
         input {
+            width: 400px;
             height: 42px;
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             font-size: 20px;
             border-radius: 5px;
             margin-left: 15px;
-            text-indent: 8px;
+            text-indent: 18px;
             vertical-align: bottom;
+            padding-right: 33px;
         }
 
         input::placeholder {
@@ -49,21 +50,15 @@
         .container {
             height: 100vh;
             display: flex;
-            flex-direction: row-reverse;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-content: center;
             align-items: flex-start;
             margin-top: 100px;
-            justify-content: center;
-            flex-wrap: wrap;
-            position: relative;
         }
 
         .order-list {
-            display: block;
-            position: absolute;
-            left: 48%;
-            top: 15%;
-            width: auto;
-            height: auto;
+            margin-top: 45px;
 
         }
 
@@ -76,25 +71,46 @@
             border: 0.5px dotted brown;
             border-radius: 2px;
             padding: 2px;
+            font-size: 14px;
             float: right;
         }
 
         .container .list-item {
-            width: 215px;
+            width: 360px;
             margin-bottom: 10px;
 
         }
 
-        .container ol .done {
+        .container ol .accomplished {
             color: red;
             font-style: italic;
             text-decoration: line-through;
         }
 
-        .container ol .undone {
-            color: #000;
-            font-style: normal;
-            text-decoration: none;
+        .container .input-section .clear {
+            display: block;
+            width: 25px;
+            height: 25px;
+            font-size: 18px;
+            color: gray;
+            border: 1px solid gray;
+            border-radius: 50%;
+            position: relative;
+            top: 49%;
+            left: 63%;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: opacity ease 0.25s;
+        }
+
+        .container .input-section .clear:hover {
+            opacity: 1;
+        }
+
+        .container .input-section .clear p {
+            position: absolute;
+            left: 7px;
+            top: -16px;
         }
     </style>
 </head>
@@ -102,15 +118,20 @@
 <body>
 
     <div class="container">
-        <input type="text" class="input-element">
-        <button onclick="generate()">Click me to add items!</button>
+
+        <div class="input-section">
+            <span class="clear" onclick="reset(inputTag)">
+                <p>X</p>
+            </span>
+            <input type="text" class="input-element">
+            <button onclick="generate()">Click me to add items!</button>
+        </div>
     </div>
 
 
 
     <script>
 
-        
         function generate() {
             var inputTag = document.querySelector(".input-element");
             var deleteTask = document.createElement("SPAN");
@@ -131,6 +152,9 @@
             li.innerHTML = inputTag.value;
             li.appendChild(deleteTask);
             document.querySelector(".order-list").appendChild(li);
+            li.addEventListener("click", function (e) {
+                e.target.classList.toggle("accomplished")
+            })
             deleteItem(deleteTask);
             reset(inputTag);
         }
@@ -145,22 +169,23 @@
             document.body.querySelector(".container").appendChild(ol);
         }
         function deleteItem(giveMeSpan) {
-                giveMeSpan.classList.add("delete")
-                giveMeSpan.innerHTML = ('X')
-                giveMeSpan.addEventListener("click", function (event) {
-                    event.target.parentNode.remove();
-                }
-                )
+            giveMeSpan.classList.add("delete")
+            giveMeSpan.innerHTML = ('X')
+            giveMeSpan.addEventListener("click", function (event) {
+                event.target.parentNode.remove();
             }
+            )
+        }
 
         olMaker();
         var inputTag = document.querySelector(".input-element");
-        inputTag.addEventListener ("keydown" , function (event) {
-                if(event.key == "Enter") {
-                    generate()
-                }
+        inputTag.addEventListener("keydown", function (event) {
+            if (event.key == "Enter") {
+                generate()
             }
+        }
         )
+
 
     </script>
 </body>
